@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julio Aguilera - Twenty years of backend, mostly behind games</title>
+<meta name="description" content="Backend engineer in Barcelona. Twenty years building the half of software nobody sees, currently on online services for a live AAA shooter.">
+<meta property="og:title" content="Julio Aguilera - Twenty years of backend, mostly behind games">
+<meta property="og:description" content="Backend engineer in Barcelona. Twenty years building the half of software nobody sees.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://julio-aguilera.dev/">
+<meta property="og:image" content="https://julio-aguilera.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://julio-aguilera.dev/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<meta name="theme-color" content="#73bed3">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   PALETTE - Apollo by AdamCYounis (46 colours)
+   https://lospec.com/palette-list/apollo
+   ===================================================================== */
+:root{
+  /* blues   */ --a-b1:#172038; --a-b2:#253a5e; --a-b3:#3c5e8b; --a-b4:#4f8fba; --a-b5:#73bed3; --a-b6:#a4dddb;
+  /* greens  */ --a-g1:#19332d; --a-g2:#25562e; --a-g3:#468232; --a-g4:#75a743; --a-g5:#a8ca58; --a-g6:#d0da91;
+  /* browns  */ --a-n1:#4d2b32; --a-n2:#7a4841; --a-n3:#ad7757; --a-n4:#c09473; --a-n5:#d7b594; --a-n6:#e7d5b3;
+  /* oranges */ --a-o1:#341c27; --a-o2:#602c2c; --a-o3:#884b2b; --a-o4:#be772b; --a-o5:#de9e41; --a-o6:#e8c170;
+  /* reds    */ --a-r1:#241527; --a-r2:#411d31; --a-r3:#752438; --a-r4:#a53030; --a-r5:#cf573c; --a-r6:#da863e;
+  /* violets */ --a-v1:#1e1d39; --a-v2:#402751; --a-v3:#7a367b; --a-v4:#a23e8c; --a-v5:#c65197; --a-v6:#df84a5;
+  /* greys   */ --a-k1:#090a14; --a-k2:#10141f; --a-k3:#151d28; --a-k4:#202e37; --a-k5:#394a50; --a-k6:#577277;
+                --a-k7:#819796; --a-k8:#a8b5b2; --a-k9:#c7cfcc; --a-k10:#ebede9;
+
+  --display:"Pixelify Sans", monospace;
+  --pixel:"Silkscreen", monospace;
+  --body:"IBM Plex Sans", system-ui, sans-serif;
+
+  /* zone-driven */
+  --sky1:#73bed3; --sky2:#e8c170; --sky3:#de9e41;
+  --ground:#ad7757; --edge:#7a4841; --grit:#c09473;
+  --ink:#241527; --soft:#4d2b32; --pop:#a53030; --pop2:#3c5e8b;
+  --panel:rgba(255,255,255,.58); --line:#4d2b32; --shadow:#7a4841;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:clamp(15.5px,.35vw+14.5px,17px);
+  line-height:1.62;
+  background:var(--sky3);
+  overflow-x:hidden;
+  transition:color .5s steps(4);
+}
+
+a{color:inherit;}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+:focus-visible{outline:4px solid var(--pop);outline-offset:2px;}
+svg{shape-rendering:crispEdges;}
+
+/* ============ SKY with dither bands ============ */
+
+#sky{position:fixed;inset:0;z-index:0;}
+#sky div{position:absolute;left:0;right:0;transition:background-color .55s steps(5), background-image .55s steps(5);}
+
+.b1{top:0;height:58%;background-color:var(--sky1);}
+.b2{top:66%;height:14%;background-color:var(--sky2);}
+.b3{top:88%;bottom:0;background-color:var(--sky3);}
+
+.d1{
+  top:58%;height:8%;
+  background-color:var(--sky1);
+  background-image:
+    linear-gradient(45deg,var(--sky2) 25%,transparent 25% 75%,var(--sky2) 75%),
+    linear-gradient(45deg,var(--sky2) 25%,transparent 25% 75%,var(--sky2) 75%);
+  background-size:10px 10px;
+  background-position:0 0,5px 5px;
+}
+.d2{
+  top:80%;height:8%;
+  background-color:var(--sky2);
+  background-image:
+    linear-gradient(45deg,var(--sky3) 25%,transparent 25% 75%,var(--sky3) 75%),
+    linear-gradient(45deg,var(--sky3) 25%,transparent 25% 75%,var(--sky3) 75%);
+  background-size:10px 10px;
+  background-position:0 0,5px 5px;
+}
+
+/* ============ SCENERY ============ */
+
+#scenery{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.prop{position:absolute;bottom:100px;right:0;opacity:0;transition:opacity .45s steps(4);}
+body[data-zone="home"] .prop.home,
+body[data-zone="career"] .prop.career,
+body[data-zone="skills"] .prop.skills,
+body[data-zone="blog"] .prop.blog{opacity:1;}
+
+/* ============ GROUND ============ */
+
+#floor{position:fixed;left:0;right:0;bottom:0;height:100px;z-index:2;pointer-events:none;}
+
+#floor .top{
+  position:absolute;left:0;right:0;top:0;height:6px;
+  background:var(--grit);
+  transition:background-color .55s steps(5);
+}
+#floor .dith{
+  position:absolute;left:0;right:0;top:6px;height:10px;
+  background-color:var(--ground);
+  background-image:
+    linear-gradient(45deg,var(--grit) 25%,transparent 25% 75%,var(--grit) 75%),
+    linear-gradient(45deg,var(--grit) 25%,transparent 25% 75%,var(--grit) 75%);
+  background-size:8px 8px;background-position:0 0,4px 4px;
+  transition:background-color .55s steps(5);
+}
+#floor .body{
+  position:absolute;left:0;right:0;top:16px;bottom:0;
+  background:var(--ground);
+  transition:background-color .55s steps(5);
+}
+#floor .body::after{
+  content:"";position:absolute;left:0;right:0;top:16px;height:4px;
+  background:repeating-linear-gradient(90deg,var(--edge) 0 20px,transparent 20px 56px);
+  opacity:.7;
+}
+
+/* ============ RUNNER ============ */
+
+#runner{
+  position:fixed;
+  right:clamp(58px,11vw,190px);
+  bottom:92px;
+  width:clamp(78px,9vw,116px);
+  z-index:6;pointer-events:none;
+  will-change:transform;
+}
+#runner svg{display:block;width:100%;height:auto;image-rendering:pixelated;}
+#runner .fB{display:none;}
+#runner.go .fA{animation:fa .2s steps(1) infinite;}
+#runner.go .fB{display:block;animation:fb .2s steps(1) infinite;}
+#runner.go svg{animation:hop .2s steps(2) infinite;}
+@keyframes fa{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes fb{0%,49%{opacity:0}50%,100%{opacity:1}}
+@keyframes hop{50%{transform:translateY(-6px);}}
+
+#dust{
+  position:fixed;
+  right:clamp(58px,11vw,190px);
+  bottom:96px;width:10px;height:10px;z-index:5;
+  opacity:0;transition:opacity .1s steps(2);pointer-events:none;
+  will-change:transform;
+}
+#runner.go + #dust{opacity:1;}
+#dust i{position:absolute;bottom:0;right:0;width:8px;height:8px;background:var(--grit);}
+#dust i:nth-child(1){animation:puff .45s steps(3) infinite;}
+#dust i:nth-child(2){animation:puff .45s steps(3) .15s infinite;}
+#dust i:nth-child(3){animation:puff .45s steps(3) .3s infinite;}
+@keyframes puff{from{transform:translate(0,0);opacity:1;}to{transform:translate(34px,-20px);opacity:0;}}
+
+#hint{
+  position:fixed;right:clamp(12px,2vw,26px);bottom:18px;z-index:20;
+  font-family:var(--pixel);font-size:9px;letter-spacing:.08em;
+  color:var(--ink);background:var(--panel);
+  border:3px solid var(--line);box-shadow:4px 4px 0 var(--shadow);
+  padding:9px 11px;
+  transition:opacity .3s steps(3);
+}
+#hint.gone{opacity:0;pointer-events:none;}
+@media(max-width:640px){#hint{display:none;}}
+
+/* ============ NAV ============ */
+
+#nav{
+  position:fixed;right:clamp(10px,2vw,26px);top:50%;transform:translateY(-50%);
+  z-index:20;display:flex;flex-direction:column;gap:6px;align-items:flex-end;
+}
+#nav a{
+  display:flex;align-items:center;gap:9px;text-decoration:none;
+  font-family:var(--pixel);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);padding:6px 0;opacity:.55;transition:opacity .2s steps(2),color .2s steps(2);
+}
+#nav a span{display:none;}
+#nav a i{display:block;width:14px;height:14px;background:transparent;box-shadow:inset 0 0 0 3px currentColor;}
+#nav a:hover{opacity:1;}
+#nav a:hover span{display:block;}
+#nav a.on{opacity:1;color:var(--pop);}
+#nav a.on span{display:block;}
+#nav a.on i{background:currentColor;}
+
+/* ============ CONTENT ============ */
+
+main{position:relative;z-index:4;}
+
+.zone{
+  min-height:100vh;
+  padding:clamp(72px,12vh,130px) clamp(18px,6vw,80px) 200px;
+  max-width:1060px;margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center;
+}
+
+.eyebrow{
+  font-family:var(--pixel);font-size:10px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--pop);
+  margin:0 0 16px;
+}
+
+h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(32px,6vw,68px);line-height:1.06;letter-spacing:.005em;
+  margin:0 0 22px;max-width:17ch;
+  text-shadow:4px 4px 0 var(--shadow);
+}
+
+h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(26px,4.4vw,46px);line-height:1.1;
+  margin:0 0 18px;
+  text-shadow:3px 3px 0 var(--shadow);
+}
+
+.lede{font-size:1.1em;max-width:47ch;margin:0 0 14px;font-weight:400;}
+.note{max-width:47ch;color:var(--soft);margin:0 0 12px;font-size:.98em;}
+
+.facts{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;}
+.fact{
+  font-family:var(--pixel);font-size:9px;letter-spacing:.06em;
+  background:var(--panel);border:3px solid var(--line);
+  padding:9px 12px;box-shadow:4px 4px 0 var(--shadow);
+}
+
+/* ---- career ---- */
+
+.road{position:relative;margin-top:30px;padding-left:clamp(28px,6vw,58px);}
+.road::before{
+  content:"";position:absolute;left:clamp(8px,2vw,20px);top:8px;bottom:8px;width:6px;
+  background:repeating-linear-gradient(to bottom,var(--pop) 0 12px,transparent 12px 26px);
+}
+.stop{position:relative;padding:0 0 38px;max-width:53ch;}
+.stop::before{
+  content:"";position:absolute;
+  left:calc(clamp(8px,2vw,20px) - clamp(28px,6vw,58px) - 5px);
+  top:8px;width:16px;height:16px;
+  background:var(--pop);box-shadow:0 0 0 4px var(--panel);
+}
+.stop .yr{
+  font-family:var(--pixel);font-weight:700;font-size:11px;letter-spacing:.08em;
+  color:var(--pop);display:block;margin-bottom:5px;
+}
+.stop h3{
+  font-family:var(--display);font-weight:700;font-size:1.42em;line-height:1.15;margin:0 0 3px;
+}
+.stop .where{
+  font-family:var(--pixel);font-size:9px;letter-spacing:.06em;color:var(--soft);
+  display:block;margin-bottom:9px;
+}
+.stop p{margin:0;font-size:.98em;}
+
+.todo{
+  display:inline-block;font-family:var(--pixel);font-size:8px;font-weight:700;letter-spacing:.1em;
+  background:var(--a-o6);color:var(--a-o1);padding:4px 6px;margin-left:8px;vertical-align:middle;
+  border:2px solid var(--a-o3);
+}
+
+/* ---- skills ---- */
+
+.scenes{display:grid;gap:22px;margin-top:28px;}
+@media(min-width:780px){.scenes{grid-template-columns:1fr 1fr;}}
+
+.scene{
+  background:var(--panel);border:4px solid var(--line);
+  box-shadow:7px 7px 0 var(--shadow);
+  padding:20px;
+  transition:transform .12s steps(2),box-shadow .12s steps(2);
+}
+.scene:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 var(--shadow);}
+.scene .art{height:104px;margin-bottom:14px;}
+.scene .art svg{display:block;height:100%;width:auto;margin:0 auto;image-rendering:pixelated;}
+.scene h3{font-family:var(--display);font-weight:700;font-size:1.24em;margin:0 0 7px;line-height:1.16;}
+.scene p{margin:0;font-size:.95em;}
+.scene .kit{margin-top:11px;font-family:var(--pixel);font-size:8.5px;letter-spacing:.06em;color:var(--soft);}
+
+/* ---- blog ---- */
+
+.posts{margin-top:24px;max-width:58ch;}
+.post{
+  display:block;text-decoration:none;padding:18px 0;
+  border-bottom:3px solid var(--line);
+  transition:padding-left .12s steps(2);
+}
+.post:first-child{border-top:3px solid var(--line);}
+.post:hover{padding-left:14px;}
+.post .meta{
+  font-family:var(--pixel);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--pop);display:block;margin-bottom:6px;
+}
+.post h3{font-family:var(--display);font-weight:700;font-size:1.3em;line-height:1.18;margin:0 0 5px;}
+.post p{margin:0;color:var(--soft);font-size:.94em;}
+
+.sign{margin-top:40px;padding-top:24px;border-top:3px solid var(--line);max-width:58ch;}
+.sign .links{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:14px;}
+.sign .links a{
+  font-family:var(--pixel);font-size:10px;letter-spacing:.06em;text-decoration:none;
+  background:var(--pop);color:var(--sky1);padding:11px 14px;
+  box-shadow:4px 4px 0 var(--shadow);
+  transition:transform .1s steps(2);
+}
+.sign .links a:hover{transform:translate(-2px,-2px);}
+
+/* ---- reveal ---- */
+
+.rise{opacity:0;transform:translateY(20px);transition:opacity .4s steps(4),transform .4s steps(4);}
+.rise.in{opacity:1;transform:none;}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{animation:none !important;transition-duration:.01ms !important;}
+  .rise{opacity:1;transform:none;}
+}
+
+@media(max-width:640px){
+  #runner{width:64px;left:12px;bottom:74px;}
+  #dust{display:none;}
+  #floor{height:82px;}
+  .zone{padding-bottom:160px;}
+  h1{text-shadow:3px 3px 0 var(--shadow);}
+}
+</style>
+</head>
+<body data-zone="home">
+
+<div id="sky">
+  <div class="b1"></div><div class="d1"></div>
+  <div class="b2"></div><div class="d2"></div>
+  <div class="b3"></div>
+</div>
+
+<div id="scenery">
+
+  <!-- HOME : Barcelona -->
+  <svg class="prop home" style="width:min(780px,96vw)" viewBox="0 0 260 90" aria-hidden="true">
+    <rect x="0" y="70" width="260" height="20" fill="#4f8fba"/>
+    <rect x="0" y="66" width="260" height="4" fill="#73bed3"/>
+    <rect x="4"  y="52" width="26" height="18" fill="#884b2b"/><rect x="4" y="48" width="26" height="4" fill="#a53030"/>
+    <rect x="34" y="44" width="20" height="26" fill="#ad7757"/><rect x="34" y="40" width="20" height="4" fill="#cf573c"/>
+    <rect x="58" y="56" width="16" height="14" fill="#7a4841"/>
+    <!-- Sagrada Familia -->
+    <rect x="92"  y="30" width="8" height="40" fill="#c09473"/><rect x="94" y="22" width="4" height="8" fill="#d7b594"/><rect x="94" y="18" width="4" height="4" fill="#e8c170"/>
+    <rect x="104" y="16" width="10" height="54" fill="#d7b594"/><rect x="106" y="6" width="6" height="10" fill="#e7d5b3"/><rect x="107" y="2" width="4" height="4" fill="#e8c170"/>
+    <rect x="118" y="30" width="8" height="40" fill="#c09473"/><rect x="120" y="22" width="4" height="8" fill="#d7b594"/><rect x="120" y="18" width="4" height="4" fill="#e8c170"/>
+    <rect x="92" y="60" width="34" height="10" fill="#ad7757"/>
+    <!-- Torre Glories -->
+    <rect x="150" y="36" width="12" height="34" fill="#468232"/><rect x="152" y="30" width="8" height="6" fill="#75a743"/><rect x="154" y="26" width="4" height="4" fill="#a8ca58"/>
+    <rect x="172" y="54" width="22" height="16" fill="#7a4841"/>
+    <!-- palms -->
+    <rect x="216" y="42" width="4" height="28" fill="#7a4841"/>
+    <rect x="204" y="38" width="12" height="4" fill="#468232"/><rect x="220" y="38" width="12" height="4" fill="#468232"/>
+    <rect x="208" y="34" width="8" height="4" fill="#75a743"/><rect x="220" y="34" width="8" height="4" fill="#75a743"/>
+    <rect x="214" y="30" width="8" height="4" fill="#a8ca58"/>
+    <rect x="240" y="50" width="4" height="20" fill="#7a4841"/>
+    <rect x="232" y="46" width="8" height="4" fill="#468232"/><rect x="244" y="46" width="8" height="4" fill="#468232"/>
+  </svg>
+
+  <!-- CAREER : night hills -->
+  <svg class="prop career" style="width:min(760px,96vw)" viewBox="0 0 260 90" aria-hidden="true">
+    <rect x="18" y="10" width="3" height="3" fill="#df84a5"/><rect x="70" y="26" width="3" height="3" fill="#c65197"/>
+    <rect x="130" y="6" width="3" height="3" fill="#df84a5"/><rect x="196" y="30" width="3" height="3" fill="#c65197"/>
+    <rect x="238" y="14" width="3" height="3" fill="#df84a5"/>
+    <rect x="196" y="8" width="28" height="28" fill="#e8c170"/><rect x="192" y="12" width="4" height="20" fill="#de9e41"/><rect x="224" y="12" width="4" height="20" fill="#de9e41"/>
+    <rect x="200" y="14" width="6" height="6" fill="#de9e41"/><rect x="210" y="24" width="8" height="6" fill="#de9e41"/>
+    <path d="M0 90V64h14V52h14v12h14v26z" fill="#402751"/>
+    <path d="M60 90V56h16V44h16v12h16v34z" fill="#4a2d5e"/>
+    <path d="M140 90V68h14V58h14v10h14v22z" fill="#402751"/>
+  </svg>
+
+  <!-- SKILLS : bushes -->
+  <svg class="prop skills" style="width:min(720px,96vw)" viewBox="0 0 260 90" aria-hidden="true">
+    <rect x="10" y="62" width="34" height="28" fill="#468232"/><rect x="14" y="56" width="26" height="6" fill="#75a743"/><rect x="20" y="52" width="14" height="4" fill="#a8ca58"/>
+    <rect x="66" y="40" width="6" height="50" fill="#7a4841"/><rect x="54" y="24" width="30" height="18" fill="#25562e"/><rect x="58" y="18" width="22" height="6" fill="#468232"/><rect x="64" y="14" width="10" height="4" fill="#75a743"/>
+    <rect x="110" y="70" width="26" height="20" fill="#468232"/><rect x="114" y="64" width="18" height="6" fill="#75a743"/>
+    <rect x="170" y="46" width="6" height="44" fill="#7a4841"/><rect x="158" y="30" width="30" height="16" fill="#25562e"/><rect x="162" y="24" width="22" height="6" fill="#468232"/>
+    <rect x="214" y="66" width="36" height="24" fill="#468232"/><rect x="220" y="60" width="24" height="6" fill="#75a743"/><rect x="226" y="56" width="12" height="4" fill="#a8ca58"/>
+  </svg>
+
+  <!-- BLOG : deep night -->
+  <svg class="prop blog" style="width:min(700px,96vw)" viewBox="0 0 260 90" aria-hidden="true">
+    <rect x="24" y="16" width="3" height="3" fill="#a4dddb"/><rect x="88" y="34" width="3" height="3" fill="#73bed3"/>
+    <rect x="150" y="10" width="3" height="3" fill="#a4dddb"/><rect x="212" y="40" width="3" height="3" fill="#73bed3"/>
+    <rect x="60" y="52" width="3" height="3" fill="#4f8fba"/><rect x="180" y="60" width="3" height="3" fill="#4f8fba"/>
+    <rect x="196" y="10" width="30" height="30" fill="#c7cfcc"/><rect x="192" y="14" width="4" height="22" fill="#a8b5b2"/><rect x="226" y="14" width="4" height="22" fill="#a8b5b2"/>
+    <rect x="202" y="18" width="6" height="6" fill="#a8b5b2"/><rect x="212" y="28" width="8" height="6" fill="#a8b5b2"/>
+    <path d="M0 90V72h20V64h18v8h18v18z" fill="#151d28"/>
+    <path d="M100 90V66h22V56h20v10h20v24z" fill="#10141f"/>
+  </svg>
+</div>
+
+<div id="floor"><div class="top"></div><div class="dith"></div><div class="body"></div></div>
+
+<div id="runner">
+  <svg viewBox="0 0 20 27" aria-hidden="true">
+    <!-- shared: head + torso -->
+    <g>
+      <rect x="6"  y="1" width="8" height="2" fill="#4d2b32"/>
+      <rect x="5"  y="3" width="2" height="5" fill="#4d2b32"/>
+      <rect x="7"  y="3" width="7" height="1" fill="#4d2b32"/>
+      <rect x="7"  y="4" width="6" height="5" fill="#c09473"/>
+      <rect x="8"  y="4" width="5" height="2" fill="#d7b594"/>
+      <rect x="12" y="6" width="1" height="1" fill="#241527"/>
+      <rect x="7"  y="8" width="5" height="1" fill="#ad7757"/>
+      <rect x="6"  y="9"  width="9" height="7" fill="#cf573c"/>
+      <rect x="6"  y="9"  width="2" height="7" fill="#a53030"/>
+      <rect x="9"  y="10" width="4" height="3" fill="#da863e"/>
+      <rect x="6"  y="16" width="9" height="3" fill="#253a5e"/>
+      <rect x="6"  y="16" width="2" height="3" fill="#172038"/>
+    </g>
+    <!-- frame A -->
+    <g class="fA">
+      <rect x="14" y="10" width="3" height="4" fill="#c09473"/>
+      <rect x="16" y="13" width="3" height="3" fill="#c09473"/>
+      <rect x="3"  y="10" width="3" height="4" fill="#ad7757"/>
+      <rect x="2"  y="9"  width="3" height="2" fill="#ad7757"/>
+      <rect x="11" y="19" width="4" height="4" fill="#253a5e"/>
+      <rect x="14" y="22" width="3" height="3" fill="#c09473"/>
+      <rect x="15" y="25" width="4" height="2" fill="#ebede9"/>
+      <rect x="6"  y="19" width="4" height="5" fill="#172038"/>
+      <rect x="4"  y="24" width="3" height="2" fill="#c09473"/>
+      <rect x="2"  y="25" width="5" height="2" fill="#c7cfcc"/>
+    </g>
+    <!-- frame B -->
+    <g class="fB">
+      <rect x="14" y="10" width="3" height="4" fill="#c09473"/>
+      <rect x="15" y="8"  width="3" height="2" fill="#c09473"/>
+      <rect x="3"  y="10" width="3" height="4" fill="#ad7757"/>
+      <rect x="1"  y="13" width="3" height="3" fill="#ad7757"/>
+      <rect x="10" y="19" width="4" height="5" fill="#253a5e"/>
+      <rect x="11" y="24" width="3" height="2" fill="#c09473"/>
+      <rect x="11" y="25" width="5" height="2" fill="#ebede9"/>
+      <rect x="6"  y="19" width="4" height="4" fill="#172038"/>
+      <rect x="3"  y="22" width="3" height="3" fill="#c09473"/>
+      <rect x="1"  y="25" width="5" height="2" fill="#c7cfcc"/>
+    </g>
+  </svg>
+</div>
+
+<div id="dust"><i></i><i></i><i></i></div>
+
+<div id="hint">&#9664; &#9654; / A D &nbsp;MOVE &nbsp;&middot;&nbsp; W &nbsp;JUMP</div>
+
+<nav id="nav" aria-label="Sections">
+  <a href="#home"   data-t="home"><span>Start</span><i></i></a>
+  <a href="#career" data-t="career"><span>Career</span><i></i></a>
+  <a href="#skills" data-t="skills"><span>Skills</span><i></i></a>
+  <a href="#blog"   data-t="blog"><span>Writing</span><i></i></a>
+</nav>
+
+<main>
+
+  <section class="zone" id="home">
+    <p class="eyebrow rise">Barcelona &middot; Backend engineer</p>
+    <h1 class="rise">Hi, I'm Julio. I build the half of the game nobody sees.</h1>
+    <p class="lede rise">Twenty years writing backends. These days, the online services behind a live AAA shooter - the accounts, the logins, the data underneath. When it works, nobody notices. That's the job.</p>
+    <p class="note rise">Started in Caracas in 2006, worked my way through Madrid, landed in Barcelona. Eight stops, one language - C# - and a stubborn habit of going back to school at night. I make small games on the weekend and I'm slowly writing down what twenty years taught me.</p>
+    <div class="facts rise">
+      <span class="fact">C# / .NET</span>
+      <span class="fact">AWS &amp; distributed systems</span>
+      <span class="fact">MSc Video Game Development</span>
+      <span class="fact">Unity Certified</span>
+      <span class="fact">EN / ES</span>
+    </div>
+  </section>
+
+  <section class="zone" id="career">
+    <p class="eyebrow rise">The long run</p>
+    <h2 class="rise">Twenty years, one stop at a time</h2>
+    <p class="lede rise">Not a straight line, and not supposed to be. Every stop taught me something the next one needed.</p>
+    <div class="road" id="road"></div>
+  </section>
+
+  <section class="zone" id="skills">
+    <p class="eyebrow rise">What I'm actually good at</p>
+    <h2 class="rise">Four things I get called for</h2>
+    <p class="lede rise">Not a list of logos. These are the problems people put on my desk.</p>
+    <div class="scenes" id="scenes"></div>
+  </section>
+
+  <section class="zone" id="blog">
+    <p class="eyebrow rise">Writing</p>
+    <h2 class="rise">Notes from the server room</h2>
+    <p class="lede rise">Whatever I've been chewing on. Mostly .NET and distributed systems, sometimes games, occasionally neither.</p>
+    <div class="posts" id="posts"></div>
+    <div class="sign rise">
+      <p class="note">If any of this is your kind of problem, I'm easy to reach.</p>
+      <div class="links">
+        <a href="https://github.com/Okmaya" rel="me">GitHub</a>
+        <a href="https://www.linkedin.com/in/julio-aguilera-43940919/" rel="me">LinkedIn</a>
+        <a href="https://okmaya.itch.io" rel="me">itch.io</a>
+        <a href="https://www.artstation.com/okmaya" rel="me">ArtStation</a>
+        <a href="https://sketchfab.com/okmaya" rel="me">Sketchfab</a>
+        <a href="mailto:hola@julio-aguilera.dev">Email</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+
+/* =====================================================================
+   EDIT HERE - everything below drives the page.
+   Entries flagged todo:true show a yellow TODO badge. Replace them.
+   ===================================================================== */
+
+var CAREER = [
+  { yr:"2006 - 2012", role:".NET Software Developer", where:"WAU &middot; Caracas, Venezuela",
+    text:"Six years selling mobile content: carrier integrations, WAP and web apps, and the reporting that proved the subscription numbers were real. First lesson of my career - a system is only as reliable as the integration you don't control." },
+
+  { yr:"2013 - 2016", role:"Senior Software Engineer", where:"Mahisoft &middot; Venezuela / Madrid",
+    text:"The years I crossed the Atlantic. DocuSign e-signature into ChannelSoft's CMS, and listings work for Homesearch and Ten-x. Two continents in the same standup, which teaches you to write things down." },
+
+  { yr:"2016 - 2017", role:"Senior Solutions Developer", where:"Quodem &middot; Madrid",
+    text:"A WPF point-of-sale so pharmacists could build their own promotions, and a conferencing platform for doctors running medical congresses. Two domains I knew nothing about, which is the fastest way to learn to ask better questions." },
+
+  { yr:"2016 - 2018", role:"MSc, Video Game Development with Unity 3D", where:"CICE &middot; Madrid",
+    text:"Evenings and weekends, learning the craft I'd only ever served from the backend. Unity stuck and never left." },
+
+  { yr:"2017 - 2019", role:"Senior Backend Developer", where:"NIIT Technologies &middot; Madrid",
+    text:"A trips importer for seasonal travel content, and drag-and-drop page modules in Sitecore so content managers stopped filing a ticket every time they wanted to move a block." },
+
+  { yr:"2019 - 2021", role:"Senior Backend Engineer, then Mobile Developer", where:"Cognizant &middot; Madrid",
+    text:"Tech lead representative for the Madrid backend team on a used-car-lease microservice, then a Xamarin app that let dairy farmers check production across their sites. Different worlds, same DDD habits." },
+
+  { yr:"2021 - now", role:"Senior Backend Engineer, Online Services", where:"Ubisoft &middot; Barcelona",
+    text:"Three chapters in five years: an early Ubisoft Connect initiative that never reached production, the Rainbow Six Siege reputation system backend on AWS, and for the last two the Account team - user profiles, authentication, TFA, passkeys, SSO, and account linking with Steam and Blacknut. I don't carry a lead title; I carry the POCs, the spikes and the ADRs." },
+
+  { yr:"Evenings", role:"Novrix Labs", where:"My own thing &middot; Okmaya",
+    text:"Where I build games and tools nobody asked for, which is exactly why they're fun. I model and texture a fair amount of it myself - the art lives on ArtStation and Sketchfab, the builds on itch.io. Knowing how the asset was made changes how you argue about what the backend should carry." }
+];
+
+var SKILLS = [
+  { title:"Keeping strangers out", kit:"WebAuthn &middot; Fido2NetLib &middot; OAuth",
+    text:"Authentication that has to be right every single time, for everyone, forever. I've done the whole passkey ceremony end to end and read the spec when the tutorials disagreed.",
+    art:'<svg viewBox="0 0 32 26">'+
+      '<rect x="6" y="2" width="7" height="2" fill="#4d2b32"/><rect x="5" y="4" width="2" height="5" fill="#4d2b32"/>'+
+      '<rect x="7" y="4" width="6" height="5" fill="#c09473"/><rect x="8" y="4" width="4" height="2" fill="#d7b594"/><rect x="11" y="6" width="1" height="1" fill="#241527"/>'+
+      '<rect x="6" y="9" width="8" height="7" fill="#cf573c"/><rect x="6" y="9" width="2" height="7" fill="#a53030"/>'+
+      '<rect x="6" y="16" width="3" height="8" fill="#253a5e"/><rect x="11" y="16" width="3" height="8" fill="#172038"/>'+
+      '<rect x="5" y="24" width="5" height="2" fill="#ebede9"/><rect x="11" y="24" width="5" height="2" fill="#c7cfcc"/>'+
+      '<rect x="14" y="11" width="4" height="2" fill="#c09473"/>'+
+      '<rect x="18" y="4" width="12" height="12" fill="#4f8fba"/><rect x="18" y="4" width="12" height="2" fill="#73bed3"/>'+
+      '<rect x="20" y="16" width="8" height="3" fill="#3c5e8b"/><rect x="22" y="19" width="4" height="2" fill="#253a5e"/>'+
+      '<rect x="21" y="9" width="2" height="2" fill="#ebede9"/><rect x="23" y="11" width="2" height="2" fill="#ebede9"/><rect x="25" y="7" width="2" height="4" fill="#ebede9"/></svg>' },
+
+  { title:"Choosing where data lives", kit:"DynamoDB &middot; Aurora &middot; SQL",
+    text:"Access patterns before schemas. Key-value or relational on the merits, hybrid when the honest answer is both, and migrations that finish without a maintenance window.",
+    art:'<svg viewBox="0 0 32 26">'+
+      '<rect x="2" y="6"  width="14" height="4" fill="#4f8fba"/><rect x="2" y="6" width="14" height="1" fill="#73bed3"/>'+
+      '<rect x="2" y="11" width="14" height="4" fill="#468232"/><rect x="2" y="11" width="14" height="1" fill="#75a743"/>'+
+      '<rect x="2" y="16" width="14" height="4" fill="#a23e8c"/><rect x="2" y="16" width="14" height="1" fill="#c65197"/>'+
+      '<rect x="2" y="21" width="14" height="4" fill="#be772b"/><rect x="2" y="21" width="14" height="1" fill="#de9e41"/>'+
+      '<rect x="22" y="2" width="7" height="2" fill="#4d2b32"/><rect x="21" y="4" width="2" height="5" fill="#4d2b32"/>'+
+      '<rect x="23" y="4" width="6" height="5" fill="#c09473"/><rect x="24" y="4" width="4" height="2" fill="#d7b594"/><rect x="27" y="6" width="1" height="1" fill="#241527"/>'+
+      '<rect x="22" y="9" width="8" height="7" fill="#cf573c"/><rect x="22" y="9" width="2" height="7" fill="#a53030"/>'+
+      '<rect x="22" y="16" width="3" height="8" fill="#253a5e"/><rect x="27" y="16" width="3" height="8" fill="#172038"/>'+
+      '<rect x="21" y="24" width="5" height="2" fill="#ebede9"/><rect x="27" y="24" width="5" height="2" fill="#c7cfcc"/>'+
+      '<rect x="17" y="12" width="5" height="2" fill="#c09473"/></svg>' },
+
+  { title:"Putting out the fire", kit:"Rollbacks &middot; log forensics &middot; KQL",
+    text:"Deploys, rollbacks, and knowing which one to reach for at 3am. Reading logs at volume until the story makes sense, then writing down what happened so it doesn't happen twice.",
+    art:'<svg viewBox="0 0 32 26">'+
+      '<rect x="4" y="2" width="7" height="2" fill="#4d2b32"/><rect x="3" y="4" width="2" height="5" fill="#4d2b32"/>'+
+      '<rect x="5" y="4" width="6" height="5" fill="#c09473"/><rect x="6" y="4" width="4" height="2" fill="#d7b594"/><rect x="9" y="6" width="1" height="1" fill="#241527"/>'+
+      '<rect x="4" y="9" width="8" height="7" fill="#cf573c"/><rect x="4" y="9" width="2" height="7" fill="#a53030"/>'+
+      '<rect x="4" y="16" width="3" height="8" fill="#253a5e"/><rect x="9" y="16" width="3" height="8" fill="#172038"/>'+
+      '<rect x="3" y="24" width="5" height="2" fill="#ebede9"/><rect x="9" y="24" width="5" height="2" fill="#c7cfcc"/>'+
+      '<rect x="12" y="11" width="6" height="2" fill="#c09473"/><rect x="17" y="9" width="3" height="6" fill="#577277"/>'+
+      '<rect x="20" y="11" width="4" height="2" fill="#a8b5b2"/>'+
+      '<rect x="25" y="14" width="6" height="10" fill="#a53030"/><rect x="26" y="10" width="4" height="4" fill="#cf573c"/>'+
+      '<rect x="27" y="6"  width="3" height="4" fill="#da863e"/><rect x="27" y="16" width="3" height="6" fill="#e8c170"/>'+
+      '<rect x="24" y="24" width="8" height="2" fill="#602c2c"/></svg>' },
+
+  { title:"Building the thing itself", kit:"Unity &middot; C# &middot; game systems",
+    text:"I make small games on my own time. It's why I understand what the backend is actually holding up - and why I argue about latency budgets like they're personal.",
+    art:'<svg viewBox="0 0 32 26">'+
+      '<rect x="12" y="1" width="7" height="2" fill="#4d2b32"/><rect x="11" y="3" width="2" height="5" fill="#4d2b32"/>'+
+      '<rect x="13" y="3" width="6" height="5" fill="#c09473"/><rect x="14" y="3" width="4" height="2" fill="#d7b594"/><rect x="17" y="5" width="1" height="1" fill="#241527"/>'+
+      '<rect x="12" y="8" width="8" height="6" fill="#cf573c"/><rect x="12" y="8" width="2" height="6" fill="#a53030"/>'+
+      '<rect x="12" y="20" width="3" height="4" fill="#253a5e"/><rect x="17" y="20" width="3" height="4" fill="#172038"/>'+
+      '<rect x="11" y="24" width="5" height="2" fill="#ebede9"/><rect x="17" y="24" width="5" height="2" fill="#c7cfcc"/>'+
+      '<rect x="6"  y="14" width="20" height="6" fill="#3c5e8b"/><rect x="6" y="14" width="20" height="2" fill="#4f8fba"/>'+
+      '<rect x="9"  y="16" width="4" height="2" fill="#ebede9"/><rect x="10" y="15" width="2" height="4" fill="#ebede9"/>'+
+      '<rect x="19" y="16" width="2" height="2" fill="#e8c170"/><rect x="22" y="17" width="2" height="2" fill="#75a743"/>'+
+      '<rect x="8"  y="12" width="4" height="2" fill="#c09473"/><rect x="20" y="12" width="4" height="2" fill="#c09473"/></svg>' }
+];
+
+var POSTS = [
+  { meta:"In progress", title:"Passkeys in C#: the whole WebAuthn ceremony, end to end",
+    text:"What the challenge actually protects, what you store, and the three places the tutorials and the spec disagree.", href:"#" },
+  { meta:"Planned", title:"Choosing a database you can still live with in three years",
+    text:"Access patterns first. Picking between key-value and relational without the religion.", href:"#" },
+  { meta:"Planned", title:"Post title goes here", text:"One line on what it's about.", href:"#" }
+];
+
+/* ===================== render ===================== */
+
+var road = document.getElementById('road');
+CAREER.forEach(function(c){
+  var d = document.createElement('div');
+  d.className = 'stop rise';
+  d.innerHTML = '<span class="yr">' + c.yr + '</span>' +
+    '<h3>' + c.role + (c.todo ? '<span class="todo">TODO</span>' : '') + '</h3>' +
+    '<span class="where">' + c.where + '</span><p>' + c.text + '</p>';
+  road.appendChild(d);
+});
+
+var scenes = document.getElementById('scenes');
+SKILLS.forEach(function(s){
+  var d = document.createElement('div');
+  d.className = 'scene rise';
+  d.innerHTML = '<div class="art">' + s.art + '</div><h3>' + s.title + '</h3>' +
+    '<p>' + s.text + '</p><div class="kit">' + s.kit + '</div>';
+  scenes.appendChild(d);
+});
+
+var posts = document.getElementById('posts');
+POSTS.forEach(function(p){
+  var a = document.createElement('a');
+  a.className = 'post rise';
+  a.href = p.href;
+  a.innerHTML = '<span class="meta">' + p.meta + '</span><h3>' + p.title + '</h3><p>' + p.text + '</p>';
+  posts.appendChild(a);
+});
+
+/* ===================== zone palettes (Apollo) ===================== */
+
+var PALETTE = {
+  home:   { sky1:"#73bed3", sky2:"#e8c170", sky3:"#de9e41",
+            ground:"#ad7757", edge:"#7a4841", grit:"#c09473",
+            ink:"#241527", soft:"#4d2b32", pop:"#a53030",
+            panel:"rgba(231,213,179,.72)", line:"#7a4841", shadow:"#7a4841" },
+
+  career: { sky1:"#1e1d39", sky2:"#402751", sky3:"#7a367b",
+            ground:"#402751", edge:"#7a367b", grit:"#602c2c",
+            ink:"#ebede9", soft:"#df84a5", pop:"#e8c170",
+            panel:"rgba(30,29,57,.62)", line:"#a23e8c", shadow:"#241527" },
+
+  skills: { sky1:"#a4dddb", sky2:"#73bed3", sky3:"#4f8fba",
+            ground:"#75a743", edge:"#468232", grit:"#a8ca58",
+            ink:"#172038", soft:"#253a5e", pop:"#a23e8c",
+            panel:"rgba(235,237,233,.76)", line:"#253a5e", shadow:"#3c5e8b" },
+
+  blog:   { sky1:"#090a14", sky2:"#10141f", sky3:"#172038",
+            ground:"#151d28", edge:"#253a5e", grit:"#202e37",
+            ink:"#ebede9", soft:"#819796", pop:"#73bed3",
+            panel:"rgba(23,32,56,.66)", line:"#394a50", shadow:"#090a14" }
+};
+
+var root = document.documentElement.style;
+
+function paint(zone){
+  var p = PALETTE[zone];
+  if(!p) return;
+  root.setProperty('--sky1', p.sky1);
+  root.setProperty('--sky2', p.sky2);
+  root.setProperty('--sky3', p.sky3);
+  root.setProperty('--ground', p.ground);
+  root.setProperty('--edge', p.edge);
+  root.setProperty('--grit', p.grit);
+  root.setProperty('--ink', p.ink);
+  root.setProperty('--soft', p.soft);
+  root.setProperty('--pop', p.pop);
+  root.setProperty('--panel', p.panel);
+  root.setProperty('--line', p.line);
+  root.setProperty('--shadow', p.shadow);
+  document.body.dataset.zone = zone;
+  var m = document.querySelector('meta[name="theme-color"]');
+  if(m) m.setAttribute('content', p.sky1);
+}
+
+var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+
+var zoneObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(!e.isIntersecting) return;
+    paint(e.target.id);
+    links.forEach(function(l){ l.classList.toggle('on', l.dataset.t === e.target.id); });
+  });
+}, { threshold:0, rootMargin:'-45% 0px -45% 0px' });
+
+document.querySelectorAll('.zone').forEach(function(z){ zoneObs.observe(z); });
+
+/* ===================== reveal ===================== */
+
+var riseObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('in'); riseObs.unobserve(e.target); }
+  });
+}, { threshold:.14, rootMargin:'0px 0px -8% 0px' });
+
+document.querySelectorAll('.rise').forEach(function(el,i){
+  el.style.transitionDelay = (Math.min(i,6)*45) + 'ms';
+  riseObs.observe(el);
+});
+
+/* ===================== runner ===================== */
+
+var runner = document.getElementById('runner');
+var dust   = document.getElementById('dust');
+var hint   = document.getElementById('hint');
+
+var rx = 0;            /* horizontal offset from the right-hand home spot */
+var vy = 0;            /* vertical velocity while jumping                 */
+var jy = 0;            /* current jump height                            */
+var face = 1;          /* 1 = right, -1 = left                           */
+var held = {};
+var scrollRun = 0;     /* timestamp until which scrolling counts as running */
+var SPEED = 0.34;      /* px per ms */
+var GRAV  = 0.0022;
+var LEAP  = 0.72;
+
+function limits(){
+  return { min: -(window.innerWidth - 210), max: 34 };
+}
+
+document.addEventListener('keydown', function(e){
+  var k = e.key.toLowerCase();
+
+  if(k === 'arrowleft' || k === 'a' || k === 'arrowright' || k === 'd'){
+    held[k] = true;
+    hint.classList.add('gone');
+    e.preventDefault();
+    return;
+  }
+
+  if(k === 'w'){
+    hint.classList.add('gone');
+    if(jy === 0){ vy = LEAP; }
+    e.preventDefault();
+  }
+});
+
+document.addEventListener('keyup', function(e){ held[e.key.toLowerCase()] = false; });
+
+window.addEventListener('scroll', function(){
+  scrollRun = performance.now() + 150;
+}, { passive:true });
+
+var prev = performance.now();
+
+function tick(now){
+  var dt = Math.min(now - prev, 48);
+  prev = now;
+
+  var dir = 0;
+  if(held['arrowleft']  || held['a']) dir -= 1;
+  if(held['arrowright'] || held['d']) dir += 1;
+
+  if(dir !== 0){
+    var lim = limits();
+    rx = Math.max(lim.min, Math.min(lim.max, rx + dir * SPEED * dt));
+    face = dir;
+  }
+
+  if(vy !== 0 || jy > 0){
+    vy -= GRAV * dt;
+    jy += vy * dt;
+    if(jy <= 0){ jy = 0; vy = 0; }
+  }
+
+  var moving = dir !== 0 || now < scrollRun;
+  runner.classList.toggle('go', moving && jy === 0);
+
+  var flip = face < 0 ? ' scaleX(-1)' : '';
+  runner.style.transform = 'translate(' + rx.toFixed(1) + 'px,' + (-jy).toFixed(1) + 'px)' + flip;
+  dust.style.transform   = 'translateX(' + rx.toFixed(1) + 'px)' + (face < 0 ? ' scaleX(-1)' : '');
+
+  requestAnimationFrame(tick);
+}
+
+requestAnimationFrame(tick);
+
+setTimeout(function(){ hint.classList.add('gone'); }, 9000);
+
+paint('home');
+links[0].classList.add('on');
+
+})();
+</script>
+
+</body>
+</html>
