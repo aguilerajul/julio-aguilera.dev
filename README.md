@@ -77,7 +77,7 @@ Please don't republish the writing or the artwork as your own.
 
 ## Elsewhere
 
-[GitHub](https://github.com/Okmaya) ·
+[GitHub](https://github.com/aguilerajul) ·
 [itch.io](https://okmaya.itch.io) ·
 [ArtStation](https://www.artstation.com/okmaya) ·
 [Sketchfab](https://sketchfab.com/okmaya) ·
