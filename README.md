@@ -26,17 +26,13 @@ visitors keep native page scrolling.
 
 ## Editing the content
 
-All the content lives in three arrays at the top of the `<script>` block at
-the bottom of `index.html`. No HTML edits needed.
+The career timeline, the skill cards and the article list are plain HTML in
+`index.html` - inside `.road`, `.scenes` and `.posts` respectively. They used
+to be generated from JavaScript arrays, which was tidier to edit but meant
+crawlers and link-preview bots saw an empty page. Static markup wins.
 
-| Array    | Drives                                        |
-|----------|-----------------------------------------------|
-| `CAREER` | The timeline stops in the Career zone         |
-| `SKILLS` | The four cards in the Skills zone             |
-| `POSTS`  | The article list in the Writing zone          |
-
-Colours are set per zone in the `PALETTE` object just below those, and the
-full 46-colour source palette is declared as CSS custom properties (`--a-b1`
+Colours are set per zone in the `PALETTE` object in the script, and the full
+46-colour source palette is declared as CSS custom properties (`--a-b1`
 through `--a-k10`) at the top of the stylesheet.
 
 ## Replacing the SVG sprites with PNGs
