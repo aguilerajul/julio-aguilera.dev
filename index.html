@@ -152,7 +152,9 @@ body[data-zone="blog"] .prop.blog{opacity:1;}
   image-rendering:pixelated;
 }
 #runner.go .sprite{animation:walk .6s steps(6) infinite;}
-@keyframes walk{from{background-position-x:0%}to{background-position-x:100%}}
+/* 6 frames: target 120% (=100*N/(N-1)), not 100%, so each step lands on a
+   whole frame instead of half-way between two - see README. */
+@keyframes walk{from{background-position-x:0%}to{background-position-x:120%}}
 
 #dust{
   position:fixed;

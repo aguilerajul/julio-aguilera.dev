@@ -49,9 +49,17 @@ stays sharp at any of the runner's responsive `clamp()` sizes:
   image-rendering:pixelated;
 }
 #runner.go .sprite{ animation:walk .6s steps(6) infinite; }
-@keyframes walk{ from{ background-position-x:0%; } to{ background-position-x:100%; } }
+@keyframes walk{ from{ background-position-x:0%; } to{ background-position-x:120%; } }
 ```
 
+The `to` value is **not** 100% - with N frames, `background-position-x:100%`
+only ever reaches frame N-1's position, and with a percentage-based
+`background-size` the intermediate `steps()` stops land *between* frames
+instead of on them (a visible smear/double-exposure look). The formula that
+lands every step exactly on a frame is `to: 100 * N / (N-1)%`. For 6 frames
+that's `100*6/5 = 120%`. If you change the frame count, recompute this
+value, the `background-size` percentage (`100% * N`), and the `steps()`
+count together - all three must agree.
 If you replace it with a sheet with a different frame count, update the
 `background-size` percentage (`100% * frame count`) and the `steps()` count
 to match - both must stay in sync with the number of frames in the strip.
