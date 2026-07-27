@@ -19,7 +19,7 @@ as a static file and it will still work in ten years, which is the point.
   and you can drive it yourself with `←` `→` / `A` `D`, and jump with `W`.
 - **Pixel art** drawn on a real pixel grid: the runner is a hand-drawn 32×32
   sprite sheet (`runner.png`, 6-frame walk cycle in a horizontal strip), the
-  skill vignettes are inline SVG at 32×26.
+  skill vignettes are hand-drawn 32×32 PNGs in `src/images/`.
 
 Arrow-up and arrow-down are deliberately *not* captured, so keyboard-only
 visitors keep native page scrolling.
