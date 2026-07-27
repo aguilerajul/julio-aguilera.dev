@@ -17,9 +17,9 @@ as a static file and it will still work in ten years, which is the point.
   ground and palette. Scrolling into a zone repaints the whole page.
 - **A runner** pinned to the right of the viewport. It runs while you scroll,
   and you can drive it yourself with `←` `→` / `A` `D`, and jump with `W`.
-- **Pixel art** drawn on a real pixel grid: the runner is a 20×27 sprite, the
-  skill vignettes are 32×26. Rendered as inline SVG rectangles for now,
-  to be replaced with hand-drawn PNGs.
+- **Pixel art** drawn on a real pixel grid: the runner is a hand-drawn 32×32
+  sprite sheet (`runner.png`, 6-frame walk cycle in a horizontal strip), the
+  skill vignettes are inline SVG at 32×26.
 
 Arrow-up and arrow-down are deliberately *not* captured, so keyboard-only
 visitors keep native page scrolling.
@@ -35,24 +35,26 @@ Colours are set per zone in the `PALETTE` object in the script, and the full
 46-colour source palette is declared as CSS custom properties (`--a-b1`
 through `--a-k10`) at the top of the stylesheet.
 
-## Replacing the SVG sprites with PNGs
+## Updating the runner sprite
 
-Export at 1x as indexed PNG-8 with alpha - never JPEG, which destroys hard
-edges and has no transparency. Then swap each `<svg>` for an element with a
-background sprite sheet:
+`runner.png` is a 192×32 sheet, six 32×32 frames in a horizontal strip,
+PNG with alpha - never JPEG, which destroys hard edges and has no
+transparency. It's wired up with a percentage-based `background-size` so it
+stays sharp at any of the runner's responsive `clamp()` sizes:
 
 ```css
 #runner .sprite{
-  width:116px; height:156px;
-  background:url(runner.png) 0 0 / 464px 156px;  /* 4 frames */
+  background-image:url(runner.png);
+  background-size:600% 100%;  /* 6 frames */
   image-rendering:pixelated;
 }
-#runner.go .sprite{ animation:run .32s steps(4) infinite; }
-@keyframes run{ to{ background-position:-464px 0; } }
+#runner.go .sprite{ animation:walk .6s steps(6) infinite; }
+@keyframes walk{ from{ background-position-x:0%; } to{ background-position-x:100%; } }
 ```
 
-Keep `background-size` an integer multiple of the native size, or you get
-half-pixels. The `steps()` count must match the number of frames.
+If you replace it with a sheet with a different frame count, update the
+`background-size` percentage (`100% * frame count`) and the `steps()` count
+to match - both must stay in sync with the number of frames in the strip.
 
 ## Running it locally
 
