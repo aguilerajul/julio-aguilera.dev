@@ -1,0 +1,117 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e8]: ◀ ▶ / A D MOVE · W JUMP
+  - navigation "Sections" [ref=f3e9]:
+    - link "Start" [ref=f3e10] [cursor=pointer]:
+      - /url: "#home"
+    - link [ref=f3e13] [cursor=pointer]:
+      - /url: "#career"
+    - link [ref=f3e15] [cursor=pointer]:
+      - /url: "#skills"
+    - link [ref=f3e17] [cursor=pointer]:
+      - /url: "#blog"
+  - main [ref=f3e19]:
+    - generic [ref=f3e20]:
+      - paragraph [ref=f3e21]: Barcelona · Backend engineer
+      - heading "Hi, I'm Julio. I build the half of the game nobody sees." [level=1] [ref=f3e22]
+      - paragraph [ref=f3e23]: Twenty years writing backends. These days, the online services behind a live AAA shooter - the accounts, the logins, the data underneath. When it works, nobody notices. That's the job.
+      - paragraph [ref=f3e24]: Started in Caracas in 2006, worked my way through Madrid, landed in Barcelona. Eight stops, one language - C# - and a stubborn habit of going back to school at night. I make small games on the weekend and I'm slowly writing down what twenty years taught me.
+      - generic [ref=f3e25]:
+        - generic [ref=f3e26]: C# / .NET
+        - generic [ref=f3e27]: AWS & distributed systems
+        - generic [ref=f3e28]: MSc Video Game Development
+        - generic [ref=f3e29]: Unity Certified
+        - generic [ref=f3e30]: EN / ES
+    - generic [ref=f3e31]:
+      - paragraph [ref=f3e32]: The long run
+      - heading "Twenty years, one stop at a time" [level=2] [ref=f3e33]
+      - paragraph [ref=f3e34]: Not a straight line, and not supposed to be. Every stop taught me something the next one needed.
+      - generic [ref=f3e35]:
+        - generic [ref=f3e36]:
+          - generic [ref=f3e37]: 2006 - 2012
+          - heading ".NET Software Developer" [level=3] [ref=f3e38]
+          - generic [ref=f3e39]: WAU · Caracas, Venezuela
+          - paragraph [ref=f3e40]: "Six years selling mobile content: carrier integrations, WAP and web apps, and the reporting that proved the subscription numbers were real. First lesson of my career - a system is only as reliable as the integration you don't control."
+        - generic [ref=f3e41]:
+          - generic [ref=f3e42]: 2013 - 2016
+          - heading "Senior Software Engineer" [level=3] [ref=f3e43]
+          - generic [ref=f3e44]: Mahisoft · Venezuela / Madrid
+          - paragraph [ref=f3e45]: The years I crossed the Atlantic. DocuSign e-signature into ChannelSoft's CMS, and listings work for Homesearch and Ten-x. Two continents in the same standup, which teaches you to write things down.
+        - generic [ref=f3e46]:
+          - generic [ref=f3e47]: 2016 - 2017
+          - heading "Senior Solutions Developer" [level=3] [ref=f3e48]
+          - generic [ref=f3e49]: Quodem · Madrid
+          - paragraph [ref=f3e50]: A WPF point-of-sale so pharmacists could build their own promotions, and a conferencing platform for doctors running medical congresses. Two domains I knew nothing about, which is the fastest way to learn to ask better questions.
+        - generic [ref=f3e51]:
+          - generic [ref=f3e52]: 2016 - 2018
+          - heading "MSc, Video Game Development with Unity 3D" [level=3] [ref=f3e53]
+          - generic [ref=f3e54]: CICE · Madrid
+          - paragraph [ref=f3e55]: Evenings and weekends, learning the craft I'd only ever served from the backend. Unity stuck and never left.
+        - generic [ref=f3e56]:
+          - generic [ref=f3e57]: 2017 - 2019
+          - heading "Senior Backend Developer" [level=3] [ref=f3e58]
+          - generic [ref=f3e59]: NIIT Technologies · Madrid
+          - paragraph [ref=f3e60]: A trips importer for seasonal travel content, and drag-and-drop page modules in Sitecore so content managers stopped filing a ticket every time they wanted to move a block.
+        - generic [ref=f3e61]:
+          - generic [ref=f3e62]: 2019 - 2021
+          - heading "Senior Backend Engineer, then Mobile Developer" [level=3] [ref=f3e63]
+          - generic [ref=f3e64]: Cognizant · Madrid
+          - paragraph [ref=f3e65]: Tech lead representative for the Madrid backend team on a used-car-lease microservice, then a Xamarin app that let dairy farmers check production across their sites. Different worlds, same DDD habits.
+        - generic [ref=f3e66]:
+          - generic [ref=f3e67]: 2021 - now
+          - heading "Senior Backend Engineer, Online Services" [level=3] [ref=f3e68]
+          - generic [ref=f3e69]: Ubisoft · Barcelona
+          - paragraph [ref=f3e70]: "Three chapters in five years: an early Ubisoft Connect initiative that never reached production, the Rainbow Six Siege reputation system backend on AWS, and for the last two the Account team - user profiles, authentication, TFA, passkeys, SSO, and account linking with Steam and Blacknut. I don't carry a lead title; I carry the POCs, the spikes and the ADRs."
+        - generic [ref=f3e71]:
+          - generic [ref=f3e72]: Evenings
+          - heading "Novrix Labs" [level=3] [ref=f3e73]
+          - generic [ref=f3e74]: My own thing · Okmaya
+          - paragraph [ref=f3e75]: Where I build games and tools nobody asked for, which is exactly why they're fun. I model and texture a fair amount of it myself - the art lives on ArtStation and Sketchfab, the builds on itch.io. Knowing how the asset was made changes how you argue about what the backend should carry.
+    - generic [ref=f3e76]:
+      - paragraph [ref=f3e77]: What I'm actually good at
+      - heading "Four things I get called for" [level=2] [ref=f3e78]
+      - paragraph [ref=f3e79]: Not a list of logos. These are the problems people put on my desk.
+      - generic [ref=f3e80]:
+        - generic [ref=f3e81]:
+          - heading "Keeping strangers out" [level=3] [ref=f3e83]
+          - paragraph [ref=f3e84]: Authentication that has to be right every single time, for everyone, forever. I've done the whole passkey ceremony end to end and read the spec when the tutorials disagreed.
+          - generic [ref=f3e85]: WebAuthn · Fido2NetLib · OAuth
+        - generic [ref=f3e86]:
+          - heading "Choosing where data lives" [level=3] [ref=f3e88]
+          - paragraph [ref=f3e89]: Access patterns before schemas. Key-value or relational on the merits, hybrid when the honest answer is both, and migrations that finish without a maintenance window.
+          - generic [ref=f3e90]: DynamoDB · Aurora · SQL
+        - generic [ref=f3e91]:
+          - heading "Putting out the fire" [level=3] [ref=f3e93]
+          - paragraph [ref=f3e94]: Deploys, rollbacks, and knowing which one to reach for at 3am. Reading logs at volume until the story makes sense, then writing down what happened so it doesn't happen twice.
+          - generic [ref=f3e95]: Rollbacks · log forensics · KQL
+        - generic [ref=f3e96]:
+          - heading "Building the thing itself" [level=3] [ref=f3e98]
+          - paragraph [ref=f3e99]: I make small games on my own time. It's why I understand what the backend is actually holding up - and why I argue about latency budgets like they're personal.
+          - generic [ref=f3e100]: Unity · C# · game systems
+    - generic [ref=f3e101]:
+      - paragraph [ref=f3e102]: Writing
+      - heading "Notes from the server room" [level=2] [ref=f3e103]
+      - paragraph [ref=f3e104]: Whatever I've been chewing on. Mostly .NET and distributed systems, sometimes games, occasionally neither.
+      - generic [ref=f3e105]:
+        - group [ref=f3e106]:
+          - 'generic "Notes Passkeys in C#: the whole WebAuthn ceremony, end to end +" [ref=f3e107] [cursor=pointer]':
+            - generic [ref=f3e108]: Notes
+            - 'heading "Passkeys in C#: the whole WebAuthn ceremony, end to end" [level=3] [ref=f3e109]'
+            - text: +
+        - group [ref=f3e110]:
+          - generic "Notes Choosing a database you can still live with in three years +" [ref=f3e111] [cursor=pointer]:
+            - generic [ref=f3e112]: Notes
+            - heading "Choosing a database you can still live with in three years" [level=3] [ref=f3e113]
+            - text: +
+      - generic [ref=f3e114]:
+        - paragraph [ref=f3e115]: If any of this is your kind of problem, I'm easy to reach.
+        - generic [ref=f3e116]:
+          - link "GitHub" [ref=f3e117] [cursor=pointer]:
+            - /url: https://github.com/aguilerajul
+          - link "LinkedIn" [ref=f3e118] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/julio-aguilera-43940919/
+          - link "itch.io" [ref=f3e119] [cursor=pointer]:
+            - /url: https://okmaya.itch.io
+          - link "ArtStation" [ref=f3e120] [cursor=pointer]:
+            - /url: https://www.artstation.com/okmaya
+          - link "Sketchfab" [ref=f3e121] [cursor=pointer]:
+            - /url: https://sketchfab.com/okmaya

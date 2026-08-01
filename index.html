@@ -156,14 +156,18 @@ body[data-zone="blog"] .prop.blog{opacity:1;}
    whole frame instead of half-way between two - see README. */
 @keyframes walk{from{background-position-x:0%}to{background-position-x:125%}}
 
-#dust{
-  position:fixed;
-  right:clamp(58px,11vw,190px);
-  bottom:96px;width:10px;height:10px;z-index:5;
-  opacity:0;transition:opacity .1s steps(2);pointer-events:none;
-  will-change:transform;
+#runner.jump .sprite{
+  background-image:url(src/images/jump.png);
+  animation:walk .6s steps(5) infinite;
 }
-#runner.go + #dust{opacity:1;}
+
+#dust{
+  position:absolute;
+  left:50%;bottom:2px;width:10px;height:10px;z-index:5;
+  transform:translateX(-50%);
+  opacity:0;transition:opacity .1s steps(2);pointer-events:none;
+}
+#runner.go #dust{opacity:1;}
 #dust i{position:absolute;bottom:0;right:0;width:8px;height:8px;background:var(--grit);}
 #dust i:nth-child(1){animation:puff .45s steps(3) infinite;}
 #dust i:nth-child(2){animation:puff .45s steps(3) .15s infinite;}
@@ -426,9 +430,8 @@ h2{
 
 <div id="runner">
   <div class="sprite" aria-hidden="true"></div>
+  <div id="dust"><i></i><i></i><i></i></div>
 </div>
-
-<div id="dust"><i></i><i></i><i></i></div>
 
 <div id="hint">&#9664; &#9654; / A D &nbsp;MOVE &nbsp;&middot;&nbsp; W &nbsp;JUMP</div>
 
@@ -655,7 +658,6 @@ document.querySelectorAll('.rise').forEach(function(el,i){
 /* ===================== runner ===================== */
 
 var runner = document.getElementById('runner');
-var dust   = document.getElementById('dust');
 var hint   = document.getElementById('hint');
 
 var rx = 0;            /* horizontal offset from the right-hand home spot */
@@ -669,7 +671,10 @@ var GRAV  = 0.0022;
 var LEAP  = 0.72;
 
 function limits(){
-  return { min: -(window.innerWidth - 210), max: 34 };
+  /* runner's fixed position (right/width) is responsive clamp() values,
+     so read its actual on-screen edge rather than hard-coding one. */
+  var homeLeft = runner.getBoundingClientRect().left - rx;
+  return { min: -homeLeft, max: 34 };
 }
 
 function isTypingTarget(el){
@@ -727,10 +732,10 @@ function tick(now){
 
   var moving = dir !== 0 || now < scrollRun;
   runner.classList.toggle('go', moving && jy === 0);
+  runner.classList.toggle('jump', jy > 0);
 
   var flip = face < 0 ? ' scaleX(-1)' : '';
   runner.style.transform = 'translate(' + rx.toFixed(1) + 'px,' + (-jy).toFixed(1) + 'px)' + flip;
-  dust.style.transform   = 'translateX(' + rx.toFixed(1) + 'px)' + (face < 0 ? ' scaleX(-1)' : '');
 
   requestAnimationFrame(tick);
 }
