@@ -17,8 +17,8 @@ as a static file and it will still work in ten years, which is the point.
   ground and palette. Scrolling into a zone repaints the whole page.
 - **A runner** pinned to the right of the viewport. It runs while you scroll,
   and you can drive it yourself with `←` `→` / `A` `D`, and jump with `W`.
-- **Pixel art** drawn on a real pixel grid: the runner is a hand-drawn 32×32
-  sprite sheet (`runner.png`, 6-frame walk cycle in a horizontal strip), the
+- **Pixel art** drawn on a real pixel grid: the runner is a hand-drawn
+  sprite sheet (`src/imagesrunner.png`, 6-frame walk cycle in a horizontal strip), the
   skill vignettes are hand-drawn 32×32 PNGs in `src/images/`.
 
 Arrow-up and arrow-down are deliberately *not* captured, so keyboard-only
@@ -37,27 +37,41 @@ through `--a-k10`) at the top of the stylesheet.
 
 ## Updating the runner sprite
 
-`runner.png` is a 192×32 sheet, six 32×32 frames in a horizontal strip,
-PNG with alpha - never JPEG, which destroys hard edges and has no
-transparency. It's wired up with a percentage-based `background-size` so it
-stays sharp at any of the runner's responsive `clamp()` sizes:
+`runner.png` is a sheet of equal-width, equal-height frames in a horizontal
+strip - currently 5 frames at 32×32 each (160×32 total), PNG with alpha -
+never JPEG, which destroys hard edges and has no transparency. It's wired up
+with a percentage-based `background-size` so it stays sharp at any of the
+runner's responsive `clamp()` sizes:
 
 ```css
+#runner{
+  aspect-ratio:1/1;  /* single frame's width:height - update if the sheet's per-frame ratio changes */
+}
 #runner .sprite{
-  background-image:url(runner.png);
-  background-size:600% 100%;  /* 6 frames */
+  background-image:url(src/images/runner.png);
+  background-size:500% 100%;  /* 5 frames */
   image-rendering:pixelated;
 }
-#runner.go .sprite{ animation:walk .6s steps(6) infinite; }
-@keyframes walk{ from{ background-position-x:0%; } to{ background-position-x:120%; } }
+#runner.go .sprite{ animation:walk .6s steps(5) infinite; }
+@keyframes walk{ from{ background-position-x:0%; } to{ background-position-x:125%; } }
 ```
+
+Every frame in the sheet must be the **same pixel width** - the CSS above
+divides the strip into N equal slots purely by width percentage, with no
+knowledge of where the art inside each frame actually starts or ends. If the
+frames aren't equal width, each rendered slot samples a slightly wrong
+region of the sheet and you get bleed from the neighbouring frame (looks
+like a cut/seam as the animation plays). `#runner`'s `aspect-ratio` must
+also match a single frame's own width:height ratio - if it doesn't, the
+frame gets stretched to fit the box instead of shown at its native
+proportions.
 
 The `to` value is **not** 100% - with N frames, `background-position-x:100%`
 only ever reaches frame N-1's position, and with a percentage-based
 `background-size` the intermediate `steps()` stops land *between* frames
 instead of on them (a visible smear/double-exposure look). The formula that
-lands every step exactly on a frame is `to: 100 * N / (N-1)%`. For 6 frames
-that's `100*6/5 = 120%`. If you change the frame count, recompute this
+lands every step exactly on a frame is `to: 100 * N / (N-1)%`. For 5 frames
+that's `100*5/4 = 125%`. If you change the frame count, recompute this
 value, the `background-size` percentage (`100% * N`), and the `steps()`
 count together - all three must agree.
 If you replace it with a sheet with a different frame count, update the
